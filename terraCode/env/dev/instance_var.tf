@@ -1,10 +1,10 @@
 variable "appname" {
   type    = string
-  default = "ngress"
+  default = "web"
 }
 variable "env" {
   type    = string
-  default = "dev"
+  default = "development"
 }
 variable "instance_type" {
   type    = string
@@ -21,4 +21,24 @@ variable "internal" {
 variable "type" {
   type    = string
   default = "application"
+}
+
+variable "AmazonEKSWorkerNodePolicy_attachment" {
+  type = string
+  default = "AmazonEKSWorkerNodePolicy"
+}
+
+variable "AmazonEKS_CNI_Policy_attachment" {
+  type = string
+  default = "AmazonEKS_CNI_Polic"
+}
+
+variable "AmazonEC2ContainerRegistryReadOnly_attachment" {
+  type = string
+  default = "AmazonEC2ContainerRegistryReadOnly"
+}
+
+variable "eks_cluster_name" {
+  type = string
+  default = "pc-eks"
 }
