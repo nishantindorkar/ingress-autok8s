@@ -26,12 +26,12 @@ resource "aws_launch_template" "public_launch_template" {
   vpc_security_group_ids = [var.security_group_id]
 }
 
-resource "aws_autoscaling_group" "public_autoscaling_group" {
-  name                = "public-autoscaling-group"
+resource "aws_autoscaling_group" "master_autoscaling_group" {
+  name                = "master-autoscaling-group"
   vpc_zone_identifier = var.public_subnet_ids
-  desired_capacity    = length(var.public_instance_count)
-  min_size            = length(var.public_instance_count)
-  max_size            = length(var.public_instance_count)
+  desired_capacity    = 1
+  min_size            = 1
+  max_size            = 1
   
   launch_template {
     id      = aws_launch_template.public_launch_template.id
@@ -44,7 +44,33 @@ resource "aws_autoscaling_group" "public_autoscaling_group" {
 
   tag {
     key                 = "Name"
-    value               = format("Master-%s-%s-server", var.appname, var.env)
+    value               = format("master-%s-%s-server", var.appname, var.env)
     propagate_at_launch = true
+  }
+}
+
+resource "aws_autoscaling_group" "node_autoscaling_group" {
+  name                = "node-autoscaling-group"
+  vpc_zone_identifier = var.public_subnet_ids
+  desired_capacity    = length(var.public_instance_count) - 1
+  min_size            = length(var.public_instance_count) - 1
+  max_size            = length(var.public_instance_count) - 1
+  
+  launch_template {
+    id      = aws_launch_template.public_launch_template.id
+    version = "$Latest"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  dynamic "tag" {
+    for_each = toset(range(length(var.public_instance_count) - 1))
+    content {
+      key                 = "Name"
+      value               = format("node-%s-%s-server", var.appname, var.env)
+      propagate_at_launch = true
+    }
   }
 }
