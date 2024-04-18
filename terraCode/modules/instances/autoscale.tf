@@ -44,7 +44,7 @@ resource "aws_autoscaling_group" "master_autoscaling_group" {
 
   tag {
     key                 = "Name"
-    value               = format("master-%s-%s-server", var.appname, var.env)
+    value               = format("master-%s-%s", var.appname, var.env)
     propagate_at_launch = true
   }
 }
@@ -69,7 +69,7 @@ resource "aws_autoscaling_group" "node_autoscaling_group" {
     for_each = toset(range(length(var.public_instance_count) - 1))
     content {
       key                 = "Name"
-      value               = format("node-%s-%s-server", var.appname, var.env)
+      value               = format("node-%s-%s", var.appname, var.env + 1)
       propagate_at_launch = true
     }
   }
