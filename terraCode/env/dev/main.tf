@@ -24,15 +24,14 @@ module "instances" {
   security_group_id      = module.vpc.security_group_id
   public_instance_count  = module.vpc.public_cidr_blocks
   node_role_arn          = module.eks-cluster.node_role_arn
-  AmazonEKSWorkerNodePolicy_attachment = var.AmazonEKSWorkerNodePolicy_attachment
-  AmazonEKS_CNI_Policy_attachment = var.AmazonEKS_CNI_Policy_attachment
-  AmazonEC2ContainerRegistryReadOnly_attachment = var.AmazonEC2ContainerRegistryReadOnly_attachment
-  eks_cluster_name = var.eks_cluster_name
 }
 
 module "eks-cluster" {
   source = "../../modules/eks"
   public_subnet_ids      = module.vpc.public_subnet_ids
   key_name               = var.key_name
-  security_group_id      = module.vpc.security_group_id   
+  security_group_id      = module.vpc.security_group_id
+  eks_cluster_name       = var.eks_cluster_name
+  node_role_arn          = var.worker_node_role_arn
+  public_instance_count  = module.vpc.public_cidr_blocks
 }

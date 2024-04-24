@@ -23,22 +23,12 @@ variable "type" {
   default = "application"
 }
 
-variable "AmazonEKSWorkerNodePolicy_attachment" {
-  type = string
-  default = "AmazonEKSWorkerNodePolicy"
-}
-
-variable "AmazonEKS_CNI_Policy_attachment" {
-  type = string
-  default = "AmazonEKS_CNI_Polic"
-}
-
-variable "AmazonEC2ContainerRegistryReadOnly_attachment" {
-  type = string
-  default = "AmazonEC2ContainerRegistryReadOnly"
-}
-
 variable "eks_cluster_name" {
-  type = string
-  default = "pc-eks"
+  type    = string
+  default = "aws_eks_cluster.eks.name"
+}
+
+variable "worker_node_role_arn" {
+  type    = string
+  default = "aws_iam_role.worker.arn"
 }

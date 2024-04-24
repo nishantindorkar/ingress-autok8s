@@ -43,7 +43,7 @@ resource "aws_security_group" "main-sg" {
   ingress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1" 
+    protocol    = "-1"
     cidr_blocks = [var.cidr_blocks_defualt]
   }
 
