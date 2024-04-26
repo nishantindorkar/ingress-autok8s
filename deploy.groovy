@@ -21,7 +21,6 @@ pipeline {
                 // sh 'sudo apt-get update -y'
                 // sh 'sudo apt-get install maven curl unzip -y'
                 sh 'mvn clean package'
-                echo 'Maven created .war file'
             }
         }
         stage('SonarQube Analysis') {
