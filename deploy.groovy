@@ -21,15 +21,17 @@ pipeline {
                 // sh 'sudo apt-get update -y'
                 // sh 'sudo apt-get install maven curl unzip -y'
                 sh 'mvn clean package'
+                echo 'Maven created .war file'
             }
         }
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         withSonarQubeEnv('sonarqube-new') {
-        //             sh 'mvn sonar:sonar'
-        //             }
-        //     }
-        // }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube-new') {
+                    sh 'mvn sonar:sonar'
+                    echo 'SonarQube Analysis Completed'
+                    }
+            }
+        }
         // stage('Push Artifacts') {
         //     steps{
         //         // sh 'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
