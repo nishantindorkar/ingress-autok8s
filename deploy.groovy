@@ -13,7 +13,7 @@ pipeline {
         stage('Git Pull') {
             steps {
                 sh 'sudo apt update -y'
-                git credentialsId: 'jenkins', url: "${REPO_URL}"
+                //git credentialsId: 'jenkins', url: "${REPO_URL}"
                 }
         }
         stage("Build Maven") {
