@@ -20,6 +20,7 @@ pipeline {
             steps { 
                 // sh 'sudo apt-get update -y'
                 // sh 'sudo apt-get install maven curl unzip -y'
+                sh 'mvn clean'
                 sh 'mvn clean package'
                 echo 'maven created war file sucessfuly'
             }
@@ -90,14 +91,14 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Post-build Cleanup') {
-            steps {
-                //sh "aws ecr batch-delete-image --repository-name ${ECR_REPO_NAME} --image-ids imageTag=${IMG_TAG}"
-                // sh 'mvn clean'
-                //sh 'docker rmi -f `docker images -q`'
-                sh 'sudo rm -rf target'
-                sh 'ls -la'
-            }
-        } 
+        // stage('Post-build Cleanup') {
+        //     steps {
+        //         //sh "aws ecr batch-delete-image --repository-name ${ECR_REPO_NAME} --image-ids imageTag=${IMG_TAG}"
+        //         // sh 'mvn clean'
+        //         //sh 'docker rmi -f `docker images -q`'
+        //         sh 'sudo rm -rf target'
+        //         sh 'ls -la'
+        //     }
+        // } 
     }
 }
